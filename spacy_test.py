@@ -1,4 +1,5 @@
 import spacy
+import csv
 from spacy.lang.en.examples import sentences
 
 nlp = spacy.load('en_core_web_sm')
@@ -18,6 +19,8 @@ doc = nlp(uText)
 
 # print dependency_count
 
+
+
 ### This section counts the number of roots in a text file, stores them in a dict,
 ### and then writes them to a CSV file
 root_count = {}
@@ -28,7 +31,6 @@ for token in doc:
         else:
             root_count[token.lemma_.encode('utf-8')] = root_count[token.lemma_.encode('utf-8')] + 1
 # print root_count
-import csv
 with open('weightlifting.csv', 'w') as csvfile:
     fieldnames = ['verb', 'count']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
