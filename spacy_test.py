@@ -10,19 +10,21 @@ doc = nlp(uText)
 ### This section counts the total number of different dependency classes in a document,
 ### stores it in a dict, and then prints them out with corresponding counts
 
-# dependency_count = {}
-# for token in doc:
-#     if (token.dep_ not in dependency_count):
-#         dependency_count[token.dep_] = 1
-#     else:
-#         dependency_count[token.dep_] = dependency_count[token.dep_] + 1
+def getDependencyCount():
+    dependency_count = {}
+    for token in doc:
+        if (token.dep_ not in dependency_count):
+            dependency_count[token.dep_] = 1
+        else:
+            dependency_count[token.dep_] = dependency_count[token.dep_] + 1
 
-# print dependency_count
+    return dependency_count
 
 
 
 ### This section counts the number of roots in a text file, stores them in a dict,
 ### and then writes them to a CSV file
+a = 1
 root_count = {}
 for token in doc:
     if(token.dep_ == u'ROOT'):
