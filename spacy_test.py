@@ -24,18 +24,21 @@ def getDependencyCount():
 
 ### This section counts the number of roots in a text file, stores them in a dict,
 ### and then writes them to a CSV file
-a = 1
-root_count = {}
-for token in doc:
-    if(token.dep_ == u'ROOT'):
-        if (token.lemma_.encode('utf-8') not in root_count):
-            root_count[token.lemma_.encode('utf-8')] = 1
-        else:
-            root_count[token.lemma_.encode('utf-8')] = root_count[token.lemma_.encode('utf-8')] + 1
-# print root_count
-with open('weightlifting.csv', 'w') as csvfile:
-    fieldnames = ['verb', 'count']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for key,value in root_count.iteritems():
-        writer.writerow({'verb': key, 'count': value})
+temp = 'weightlifting.csv'
+def countVerbs(textFile):
+    a = 1
+    root_count = {}
+    for token in doc:
+        if(token.dep_ == u'ROOT'):
+            if (token.lemma_.encode('utf-8') not in root_count):
+                root_count[token.lemma_.encode('utf-8')] = 1
+            else:
+                root_count[token.lemma_.encode('utf-8')] = root_count[token.lemma_.encode('utf-8')] + 1
+    # print root_count
+    with open(textFile, 'w') as csvfile:
+        fieldnames = ['verb', 'count']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for key, value in root_count.iteritems():
+            writer.writerow({'verb': key, 'count': value})
+    return
