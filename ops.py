@@ -5,19 +5,18 @@ from spacy.lang.en.examples import sentences
 nlp = spacy.load('en_core_web_sm')
 
 
-tempFile = 'weightlifting.txt'
+# tempFile = 'weightlifting.txt'
 def parseFile(textFile):
     text = open(textFile, 'r').read()
     uText = text.decode('utf-8')
     doc = nlp(uText)
     return doc
-
-res = parseFile(tempFile)
+# result = parseFile(tempFile)
 
 ### This section counts the total number of different dependency classes in a document,
 ### stores it in a dict, and then prints them out with corresponding counts
-
-def getDependencyCount():
+### @param res refers to the file to be parsed (short for result)
+def getDependencyCount(res):
     dependency_count = {}
     for token in res:
         if (token.dep_ not in dependency_count):
@@ -27,13 +26,16 @@ def getDependencyCount():
 
     return dependency_count
 
-getDependencyCount()
+# getDependencyCount()
 
 ### This section counts the number of roots in a text file, stores them in a dict,
 ### and then writes them to a CSV file
-temp = 'weightlifting.csv'
-def countVerbs(newName):
-    a = 1
+
+### temp = 'weightlifting.csv'
+### @param newName is the new name of the csv file we are writing
+### @param res is the same result are using in .getDependencyCount
+### automaticallyw rites the file, doesn't return anything
+def countVerbs(newName, res):
     root_count = {}
     for token in res:
         if(token.dep_ == u'ROOT'):
@@ -50,4 +52,4 @@ def countVerbs(newName):
             writer.writerow({'verb': key, 'count': value})
     return 
 
-countVerbs(temp)
+# countVerbs(temp)

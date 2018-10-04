@@ -3,7 +3,24 @@ THIS IS THE MAIN FILE
 - All operation and commands will be issued from here
 - Methods are defined in ops.py (please refer)
 
-- Authors: Edward Chiao and Jon Jiang (in the lab of Lelia Glass, Ph. D)
-
-
+- Authors: Edward Chiao and Jon Jiang (working with Lelia Glass, Ph.D)
 """
+import ops
+
+
+def main():
+
+	# the file that we are looking at
+	tempFile = 'weightlifting.txt'
+
+	# parses the file and analyzes it
+	pf = ops.parseFile(tempFile)
+
+	# dependency parser used
+	dc = ops.getDependencyCount(pf)
+
+	# counts the number of verbs within the file
+	cv = ops.countVers('weightlifting.csv', pf)
+
+	print(pf)
+	print(dc)
