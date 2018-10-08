@@ -20,7 +20,7 @@ def main():
 	dc = ops.getDependencyCount(pf)
 
 	# counts the number of verbs within the file
-	cv = ops.countVers('weightlifting.csv', pf)
+	cv = ops.countRoots('weightlifting.csv', pf)
 
-	print(pf)
-	print(dc)
+	# print(pf)
+	# print(dc)

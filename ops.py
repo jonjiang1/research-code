@@ -13,9 +13,25 @@ def parseFile(textFile):
     return doc
 # result = parseFile(tempFile)
 
-### This section counts the total number of different dependency classes in a document,
-### stores it in a dict, and then prints them out with corresponding counts
-### @param res refers to the file to be parsed (short for result)
+"""
+This section counts the total number of words in the document.
+It does not include punctuation or symbols such as math symbols or
+emoticons.
+"""
+
+def wordCount(res):
+    count = 0
+    for token in res:
+        if (token.pos_ != u'PUNCT' or token.pos_ != u'SYM'):
+            count = count + 1
+    return count
+
+"""
+This section counts the total number of different dependency classes in a document,
+stores it in a dict, and then prints them out with corresponding counts
+@param res refers to the file to be parsed (short for result)
+"""
+
 def getDependencyCount(res):
     dependency_count = {}
     for token in res:
@@ -28,14 +44,15 @@ def getDependencyCount(res):
 
 # getDependencyCount()
 
-### This section counts the number of roots in a text file, stores them in a dict,
-### and then writes them to a CSV file
+"""
+This section counts the number of roots in a text file,
+calculates the per million word count, and then writes them to a CSV file.
+@param newName is the new name of the csv file we are writing
+@param res is the same result are using in .getDependencyCount
+automatically writes the file, doesn't return anything
+"""
 
-### temp = 'weightlifting.csv'
-### @param newName is the new name of the csv file we are writing
-### @param res is the same result are using in .getDependencyCount
-### automaticallyw rites the file, doesn't return anything
-def countVerbs(newName, res):
+def countRoots(newName, res):
     root_count = {}
     for token in res:
         if(token.dep_ == u'ROOT'):
@@ -43,13 +60,17 @@ def countVerbs(newName, res):
                 root_count[token.lemma_.encode('utf-8')] = 1
             else:
                 root_count[token.lemma_.encode('utf-8')] = root_count[token.lemma_.encode('utf-8')] + 1
+    per_million_count = []
+    for key, value in root_count.iteritems():
+        perMillion = float(value) * 1000000 // wordCount(res)  # per million word calculation
+        # len function on a spaCy doc returns number of tokens which includes punctuation so perMillion is not accurate
+        per_million_count.append((key, value, perMillion))
     # print root_count
-    with open(newName, 'w') as csvfile:
-        fieldnames = ['verb', 'count']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        for key, value in root_count.iteritems():
-            writer.writerow({'verb': key, 'count': value})
+    with open(newName, 'w') as csvfile: 
+        writer = csv.writer(csvfile)
+        writer.writerow(['verb', 'count', 'per_million_words']) # Writes header for CSV
+        for key, value, million in per_million_count:
+            writer.writerow([key, value, million])
     return 
 
-# countVerbs(temp)
+# countRoots(temp)
