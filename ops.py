@@ -74,3 +74,24 @@ def countRoots(newName, res):
     return 
 
 # countRoots(temp)
+
+"""
+This section determines if a sentence contains a verb with a null object
+"""
+
+def containsNullObject(sent):
+    for token in sent:
+        if (token.dep_ == u'OBJ' or token.dep_ == u'DOBJ'):
+            return False
+    return True
+
+"""
+This section gets all the sentences with null objects in a document
+"""
+
+def getSentWithNullObject(res):
+    hasNull = []
+    for sentence in res.sents:
+        if (containsNullObject(sentence)):
+            hasNull.append(sentence)
+    return hasNull

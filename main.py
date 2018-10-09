@@ -19,8 +19,11 @@ def main():
 	# dependency parser used
 	dc = ops.getDependencyCount(pf)
 
-	# counts the number of verbs within the file
-	cv = ops.countRoots('weightlifting.csv', pf)
+	# counts the number of verbs and calculates words per million within the file
+	ops.countRoots('weightlifting.csv', pf)
+
+	# gets sentences with null objects
+	print ops.getSentWithNullObject(pf)
 
 	# print(pf)
 	# print(dc)
