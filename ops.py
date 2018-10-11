@@ -68,6 +68,7 @@ def countRoots(newName, res):
     # print root_count
     with open(newName, 'w') as csvfile: 
         writer = csv.writer(csvfile)
+        # TODO - csv has newlines in-between?
         writer.writerow(['verb', 'count', 'per_million_words']) # Writes header for CSV
         for key, value, million in per_million_count:
             writer.writerow([key, value, million])
@@ -77,8 +78,8 @@ def countRoots(newName, res):
 
 """
 This section determines if a sentence contains a verb with a null object
+- Returns True if NO object detected
 """
-
 def containsNullObject(sent):
     for token in sent:
         if (token.dep_ == u'OBJ' or token.dep_ == u'DOBJ'):
@@ -88,10 +89,10 @@ def containsNullObject(sent):
 """
 This section gets all the sentences with null objects in a document
 """
-
 def getSentWithNullObject(res):
     hasNull = []
     for sentence in res.sents:
         if (containsNullObject(sentence)):
             hasNull.append(sentence)
     return hasNull
+
