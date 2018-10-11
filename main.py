@@ -5,7 +5,11 @@ THIS IS THE MAIN FILE
 
 - Authors: Edward Chiao and Jon Jiang (working with Lelia Glass, Ph.D)
 """
+
+# module comtaining parsing methods
 import ops
+# module for file io
+import os
 
 
 def main():
@@ -17,7 +21,7 @@ def main():
 	# dependency parser used
 	dc = ops.getDependencyCount(pf)
 	# counts the number of verbs and calculates words per million within the file
-	ops.countRoots('weightlifting.csv', pf)
+	ops.countRoots('weightlifting', pf)
 	# gets sentences with null objects
 	print ops.getSentWithNullObject(pf)
 

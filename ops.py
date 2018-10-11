@@ -1,5 +1,6 @@
 import spacy
 import csv
+import os
 from spacy.lang.en.examples import sentences
 
 nlp = spacy.load('en_core_web_sm')
@@ -50,6 +51,8 @@ calculates the per million word count, and then writes them to a CSV file.
 @param newName is the new name of the csv file we are writing
 @param res is the same result are using in .getDependencyCount
 automatically writes the file, doesn't return anything
+
+NOTE: pass in WITHOUT .CSV, will do this automatically in function
 """
 
 def countRoots(newName, res):
@@ -66,6 +69,7 @@ def countRoots(newName, res):
         # len function on a spaCy doc returns number of tokens which includes punctuation so perMillion is not accurate
         per_million_count.append((key, value, perMillion))
     # print root_count
+    newName += ".csv"
     with open(newName, 'w') as csvfile: 
         writer = csv.writer(csvfile)
         # TODO - csv has newlines in-between?
@@ -95,4 +99,18 @@ def getSentWithNullObject(res):
         if (containsNullObject(sentence)):
             hasNull.append(sentence)
     return hasNull
+
+
+"""
+This section gathers a list of all files from the reddit folder and writes a csv file for each one
+- No return value, does multiple operations
+"""
+def parseRedditFiles(res);
+    fileList = os.listdir("reddit")
+    for file in fileList:
+        tempName = file[:-4] # excludes .txt
+        # weightlifting.txt -> weightlifting
+        countRoots(tempName, res)
+    return
+
 
