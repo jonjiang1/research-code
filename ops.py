@@ -100,6 +100,15 @@ def containsVerb(sent, verb):
     return False
 
 """
+This section returns the root of the sentence.
+"""
+def getRoot(sent):
+    for token in sent:
+        if (token.dep_ == u'ROOT'):
+            return token
+    return
+
+"""
 This section gets all the sentences with null objects in a document
 """
 def getSentWithNullObject(res):
@@ -122,6 +131,23 @@ def getVerbWithNullObject(res, verb):
         if (containsVerb(sentence, verb)):
             hasVerb.append(sentence)
     return hasVerb
+
+"""
+This section returns a dict where the key is the lemma version of a verb
+and the value is a list containing all the sentences with that verb.
+"""
+
+def sortSentencesByVerb(res):
+    sorted = {}
+    sentences = getSentWithNullObject(res)
+    for sentence in sentences:
+        root = getRoot(sentence).lemma_
+        if root in sorted:
+            sorted[root].append(sentence)
+        else:
+            sorted[root] = [sentence]
+    return sorted
+
 
 
 """

@@ -24,8 +24,10 @@ def main():
 	ops.countRoots('weightlifting', pf)
 	# gets sentences with null objects
 	ops.getSentWithNullObject(pf)
+	# gets sentences with null objects and the verb utilize
+	ops.getVerbWithNullObject(pf, u'utilize')
 
-	print ops.getVerbWithNullObject(pf, u'utilize')
+	print ops.sortSentencesByVerb(pf)
 	# print(pf)
 	# print(dc)
 
