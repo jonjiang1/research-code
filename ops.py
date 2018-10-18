@@ -91,6 +91,15 @@ def containsNullObject(sent):
     return True
 
 """
+This section determines if a sentences contains a specified verb
+"""
+def containsVerb(sent, verb):
+    for token in sent:
+        if (token.lemma_ == verb):
+            return True
+    return False
+
+"""
 This section gets all the sentences with null objects in a document
 """
 def getSentWithNullObject(res):
@@ -99,6 +108,20 @@ def getSentWithNullObject(res):
         if (containsNullObject(sentence)):
             hasNull.append(sentence)
     return hasNull
+
+"""
+This section gets all the sentences that contain the specified verb
+that have null objects within a document
+@param verb must be a Unicode string
+"""
+
+def getVerbWithNullObject(res, verb):
+    hasVerb = []
+    allNulls = getSentWithNullObject(res)
+    for sentence in allNulls:
+        if (containsVerb(sentence, verb)):
+            hasVerb.append(sentence)
+    return hasVerb
 
 
 """

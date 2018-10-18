@@ -25,6 +25,7 @@ def main():
 	# gets sentences with null objects
 	ops.getSentWithNullObject(pf)
 
+	print ops.getVerbWithNullObject(pf, u'utilize')
 	# print(pf)
 	# print(dc)
 
