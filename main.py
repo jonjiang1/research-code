@@ -26,7 +26,7 @@ def main():
 	ops.getSentWithNullObject(pf)
 	# gets sentences with null objects and the verb utilize
 	ops.getVerbWithNullObject(pf, u'utilize')
-
+	# creates dict of all sentences with null objects and sorts it by verb
 	print ops.sortSentencesByVerb(pf)
 	# print(pf)
 	# print(dc)

@@ -70,7 +70,7 @@ def countRoots(newName, res):
         per_million_count.append((key, value, perMillion))
     # print root_count
     newName += ".csv"
-    with open(newName, 'w') as csvfile: 
+    with open(newName, 'wb') as csvfile: 
         writer = csv.writer(csvfile)
         # TODO - csv has newlines in-between?
         writer.writerow(['verb', 'count', 'per_million_words']) # Writes header for CSV
