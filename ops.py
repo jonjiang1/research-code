@@ -65,7 +65,7 @@ def countRoots(newName, res):
                 root_count[token.lemma_.encode('utf-8')] = root_count[token.lemma_.encode('utf-8')] + 1
     per_million_count = []
     for key, value in root_count.iteritems():
-        perMillion = float(value) * 1000000 // wordCount(res)  # per million word calculation
+        perMillion = float(value) * 1000000 / wordCount(res)  # per million word calculation
         # len function on a spaCy doc returns number of tokens which includes punctuation so perMillion is not accurate
         per_million_count.append((key, value, perMillion))
     # print root_count
@@ -105,7 +105,7 @@ def getSentWithNullObject(res):
 This section gathers a list of all files from the reddit folder and writes a csv file for each one
 - No return value, does multiple operations
 """
-def parseRedditFiles(res);
+def parseRedditFiles(res):
     fileList = os.listdir("reddit")
     for file in fileList:
         tempName = file[:-4] # excludes .txt

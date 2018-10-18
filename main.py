@@ -23,7 +23,9 @@ def main():
 	# counts the number of verbs and calculates words per million within the file
 	ops.countRoots('weightlifting', pf)
 	# gets sentences with null objects
-	print ops.getSentWithNullObject(pf)
+	ops.getSentWithNullObject(pf)
 
 	# print(pf)
 	# print(dc)
+
+main()
