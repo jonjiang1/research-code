@@ -162,6 +162,35 @@ def parseRedditFiles(res):
         countRoots(tempName, res)
     return
 
+"""
+Gets the ratio of sentences with null objects to sentences with a specified verb.
+"""
+def occurance(verb, file):
+    doc = parseFile(file)
+    countNull = 0
+    countObj = 0
+    for sentence in doc.sents:
+        if (containsVerb(sentence, verb)):
+            countObj += 1
+            if (containsNullObject(sentence)):
+                countNull += 1
+    return countNull / float(countObj)
+
+"""
+This section finds the difference in occurance of a verb between two TEXT files.
+- Uses previous methods so will only search for sentences with null objects.
+- Fraction means verb occurs more frequently in file 2, whole number means verb occurs more frequently in file 1.
+"""
+def occuranceDifference(verb, f1, f2):
+    count1 = occurance(verb, f1)
+    count2 = occurance(verb, f2)
+    if (count1 is 0): 
+        return verb + " does not occur in file 1."
+    elif (count2 is 0):
+        return verb + " does not occur in file 2."
+    else: 
+        return count1 / count2
+
 
 """
 ALL CODE BELOW THIS POINT IS FOR COMPARING CSV FILES
@@ -170,12 +199,25 @@ ALL CODE BELOW THIS POINT IS FOR COMPARING CSV FILES
 """
 This looks through 2 files and finds the list of verbs in both, and returns a list of the shared verbs
 """
-def find_similar_verbs(file1, file2):
-    pass
+def find_shared_verbs(file1, file2):
+    verb1 = []
+    verb2 = []
+    with open(file1) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            verb1.append(row['verb'])
+
+    with open(file2) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            verb2.append(row['verb'])
+
+    return list(set(verb1).intersection(verb2))
 
 
 """
 this method will take in two correctly outputted csv files and compare the rates of similar verbs
 """
 def compare_csv(file1, file2):
-    pass
+    shared_verbs = find_shared_verbs(file1, file2)
+    
