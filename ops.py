@@ -163,3 +163,19 @@ def parseRedditFiles(res):
     return
 
 
+"""
+ALL CODE BELOW THIS POINT IS FOR COMPARING CSV FILES
+"""
+
+"""
+This looks through 2 files and finds the list of verbs in both, and returns a list of the shared verbs
+"""
+def find_similar_verbs(file1, file2):
+    pass
+
+
+"""
+this method will take in two correctly outputted csv files and compare the rates of similar verbs
+"""
+def compare_csv(file1, file2):
+    pass

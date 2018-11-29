@@ -67,6 +67,15 @@ def get_list_of_keys(list_of_dicts):
 def dicts_to_csv(list_of_dicts, filename):
     f = open(filename, 'wb')
     list_of_keys = get_list_of_keys(list_of_dicts)
+    
+    # swaps verb to first index
+    first = list_of_keys[0]
+    verb_index = list_of_keys.index("verb")
+    if first != verb_index:
+        list_of_keys[verb_index] = first
+        list_of_keys[0] = "verb"
+
+
     dict_writer = csv.DictWriter(f, list_of_keys)
     dict_writer.writer.writerow(list_of_keys)
     dict_writer.writerows(list_of_dicts)
@@ -754,6 +763,8 @@ def txt_csv_to_csv(txtfile, input_csv, output_csv):
         d["most_common_objs"] = simple_sel_dict[verb]["maxobjs"]
         
         d["pmw_count"] = get_pmw(verbdict[verb]["overall_occurrences"], total_word_count)
+
+        # perhaps put this into a different file?
         d["objectless_sentences"] = verbdict[verb]["objectless_sentences"]
         d["sents_WITH_obj"] = verbdict[verb]["sents_WITH_obj"]
         list_of_dicts.append(d)
@@ -766,7 +777,14 @@ if __name__ == '__main__':
     txt_csv_to_csv("toy.txt", "toy_csv.csv", "toy_output.csv")
     #this works!! (if you want to edit stuff, do it with "toy.txt" and "toy.csv")
   
-    #remove_nonascii("askreddit.txt", "clean_askreddit.txt")
-    #cull_relevant_sentences("clean_askreddit.txt", "culled_askreddit.txt", "deduped_trans_verbs.csv")
+    remove_nonascii("business.txt", "clean_business.txt")
+    cull_relevant_sentences("clean_business.txt", "culled_business.txt", "deduped_trans_verbs.csv")
     #print parse_sentence("They drank water.")
-    txt_csv_to_csv("culled_askreddit.txt", "deduped_trans_verbs.csv", "askreddit_output.csv")
+
+
+
+    # txt_csv_to_csv("culled_askreddit.txt", "deduped_trans_verbs.csv", "askreddit_output.csv")
+    # txt_csv_to_csv("brown_relevant_sentences.txt", "deduped_trans_verbs.csv", "brown_output.csv")
+    # txt_csv_to_csv("culled_business.txt", "deduped_trans_verbs.csv", "business_output.csv")
+
+
