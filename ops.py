@@ -216,8 +216,48 @@ def find_shared_verbs(file1, file2):
 
 
 """
-this method will take in two correctly outputted csv files and compare the rates of similar verbs
+this method will take in two correctly outputted csv files and compare the similarity of implicit objects
+and the rate they are allowed for shared verbs
 """
-def compare_csv(file1, file2):
+def compare_io(file1, file2):
     shared_verbs = find_shared_verbs(file1, file2)
-    
+    rate1 = {} # this is for file1
+    rate2 = {} # this is for file2
+
+    verb1 = []
+    verb2 = []
+
+    io1 = []
+    io2 = []
+
+    with open(file1) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            verb1.append(row['verb'])
+            io1.append(row['percent_implicit_obj'])
+
+    for i in range(len(verb1)):
+        rate1[verb1[i]] = io1[i] # makes a dictionary of {verb: implicit object rate}
+
+
+    with open(file2) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            verb2.append(row['verb'])
+            io2.append(row['percent_implicit_obj'])
+
+    for i in range(len(verb2)):
+        rate2[verb2[i]] = io2[i] # makes a dictionary of {verb: implicit object rate}
+
+
+    final_io_rate_dict = {}
+    for word in shared_verbs:
+        if word in rate1 and word in rate2:
+            final_io_rate_dict[word] = [round(float(rate1[word]), 3), round(float(rate2[word]), 3)]
+
+    return final_io_rate_dict
+
+
+
+
+
