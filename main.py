@@ -3,7 +3,7 @@ THIS IS THE MAIN FILE
 - All operation and commands will be issued from here
 - Methods are defined in ops.py (please refer)
 
-- Authors: Edward Chiao and Jon Jiang (working with Lelia Glass, Ph.D)
+- Authors: Edward Chiao and Jonathan Jiang (working with Lelia Glass, Ph.D)
 """
 
 # module comtaining parsing methods
