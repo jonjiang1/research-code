@@ -31,6 +31,6 @@ def main():
 	# print(pf)
 	# print(dc)
 
-	print ops.find_shared_verbs("askreddit_output.csv", "business_output.csv")
+	print ops.compare_csv("askreddit_output.csv", "business_output.csv")
 
 main()

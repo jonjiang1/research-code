@@ -165,7 +165,7 @@ def parseRedditFiles(res):
 """
 Gets the ratio of sentences with null objects to sentences with a specified verb.
 """
-def occurance(verb, file):
+def occurrence(verb, file):
     doc = parseFile(file)
     countNull = 0
     countObj = 0
@@ -177,13 +177,13 @@ def occurance(verb, file):
     return countNull / float(countObj)
 
 """
-This section finds the difference in occurance of a verb between two TEXT files.
+This section finds the difference in occurrence of a verb between two TEXT files.
 - Uses previous methods so will only search for sentences with null objects.
 - Fraction means verb occurs more frequently in file 2, whole number means verb occurs more frequently in file 1.
 """
-def occuranceDifference(verb, f1, f2):
-    count1 = occurance(verb, f1)
-    count2 = occurance(verb, f2)
+def occurrenceDifference(verb, f1, f2):
+    count1 = occurrence(verb, f1)
+    count2 = occurrence(verb, f2)
     if (count1 is 0): 
         return verb + " does not occur in file 1."
     elif (count2 is 0):
@@ -216,8 +216,35 @@ def find_shared_verbs(file1, file2):
 
 
 """
-this method will take in two correctly outputted csv files and compare the rates of similar verbs
+this method will take in two correctly outputted csv files and
+compare the rates of verbs occurring in both files
+0.0 indicates the verb does not have any occurences of null objects in file1
+inf indicates the verb does not have any occurences of null objects in file2
 """
 def compare_csv(file1, file2):
     shared_verbs = find_shared_verbs(file1, file2)
+    counts1 = {} # Dict of verb occurences from file1 as tuples stored as (number of occurences without objects, overall occurrences of the verb)
+    counts2 = {} # ibid for file2
+    ratios = {}
+    with open(file1) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if (row['verb'] in shared_verbs):
+                c = (float(row['number_withOUT_obj']), float(row['overall_occurrences']))
+                counts1[row['verb']] = c
     
+    with open(file2) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if (row['verb'] in shared_verbs):
+                c = (float(row['number_withOUT_obj']), float(row['overall_occurrences']))
+                counts2[row['verb']] = c
+
+    for v in shared_verbs:
+        r1 = counts1[v][0] / counts1[v][1] # math using tuple values
+        r2 = counts2[v][0] / counts2[v][1]
+        try:
+            ratios[v] = r1 / r2 # final ratio of occurrence in file1 to file2
+        except ZeroDivisionError:
+            ratios[v] = float('inf')
+    return ratios
