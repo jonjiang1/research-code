@@ -216,35 +216,48 @@ def find_shared_verbs(file1, file2):
 
 
 """
-this method will take in two correctly outputted csv files and
-compare the rates of verbs occurring in both files
-0.0 indicates the verb does not have any occurences of null objects in file1
-inf indicates the verb does not have any occurences of null objects in file2
+this method will take in two correctly outputted csv files and compare the similarity of implicit objects
+and the rate they are allowed for shared verbs
 """
-def compare_csv(file1, file2):
+def compare_io(file1, file2):
     shared_verbs = find_shared_verbs(file1, file2)
-    counts1 = {} # Dict of verb occurences from file1 as tuples stored as (number of occurences without objects, overall occurrences of the verb)
-    counts2 = {} # ibid for file2
-    ratios = {}
+    rate1 = {} # this is for file1
+    rate2 = {} # this is for file2
+
+    verb1 = []
+    verb2 = []
+
+    io1 = []
+    io2 = []
+
     with open(file1) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if (row['verb'] in shared_verbs):
-                c = (float(row['number_withOUT_obj']), float(row['overall_occurrences']))
-                counts1[row['verb']] = c
-    
+            verb1.append(row['verb'])
+            io1.append(row['percent_implicit_obj'])
+
+    for i in range(len(verb1)):
+        rate1[verb1[i]] = io1[i] # makes a dictionary of {verb: implicit object rate}
+
+
     with open(file2) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if (row['verb'] in shared_verbs):
-                c = (float(row['number_withOUT_obj']), float(row['overall_occurrences']))
-                counts2[row['verb']] = c
+            verb2.append(row['verb'])
+            io2.append(row['percent_implicit_obj'])
 
-    for v in shared_verbs:
-        r1 = counts1[v][0] / counts1[v][1] # math using tuple values
-        r2 = counts2[v][0] / counts2[v][1]
-        try:
-            ratios[v] = r1 / r2 # final ratio of occurrence in file1 to file2
-        except ZeroDivisionError:
-            ratios[v] = float('inf')
-    return ratios
+    for i in range(len(verb2)):
+        rate2[verb2[i]] = io2[i] # makes a dictionary of {verb: implicit object rate}
+
+
+    final_io_rate_dict = {}
+    for word in shared_verbs:
+        if word in rate1 and word in rate2:
+            final_io_rate_dict[word] = [round(float(rate1[word]), 3), round(float(rate2[word]), 3)]
+
+    return final_io_rate_dict
+
+
+
+
+

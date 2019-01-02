@@ -777,13 +777,13 @@ if __name__ == '__main__':
     txt_csv_to_csv("toy.txt", "toy_csv.csv", "toy_output.csv")
     #this works!! (if you want to edit stuff, do it with "toy.txt" and "toy.csv")
   
-    remove_nonascii("business.txt", "clean_business.txt")
-    cull_relevant_sentences("clean_business.txt", "culled_business.txt", "deduped_trans_verbs.csv")
+    # remove_nonascii("business.txt", "clean_business.txt")
+    # cull_relevant_sentences("clean_business.txt", "culled_business.txt", "deduped_trans_verbs.csv")
     #print parse_sentence("They drank water.")
 
 
 
-    # txt_csv_to_csv("culled_askreddit.txt", "deduped_trans_verbs.csv", "askreddit_output.csv")
+    txt_csv_to_csv("culled_askreddit.txt", "deduped_trans_verbs.csv", "askreddit_output.csv")
     # txt_csv_to_csv("brown_relevant_sentences.txt", "deduped_trans_verbs.csv", "brown_output.csv")
     # txt_csv_to_csv("culled_business.txt", "deduped_trans_verbs.csv", "business_output.csv")
 

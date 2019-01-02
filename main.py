@@ -33,4 +33,6 @@ def main():
 
 	print ops.compare_csv("askreddit_output.csv", "business_output.csv")
 
+	print ops.compare_io("askreddit_output.csv", "business_output.csv")
+
 main()
